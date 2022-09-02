@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:layout_gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:id="@+id/FragmentAnswersOptionA"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Option A"
+        app:layout_constraintWidth_percent=".48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:id="@+id/FragmentAnswersOptionB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Option B"
+        app:layout_constraintWidth_percent=".48"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:id="@+id/FragmentAnswersOptionC"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Option C"
+        app:layout_constraintWidth_percent=".48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/FragmentAnswersOptionA"
+        />
+
+    <Button
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:id="@+id/FragmentAnswersOptionD"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Option D"
+        app:layout_constraintWidth_percent=".48"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/FragmentAnswersOptionB"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
