@@ -10,6 +10,7 @@ import android.os.Environment
 import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.example.q.utils.Consts.Companion.path
@@ -46,6 +47,15 @@ interface Utils {
             mediaPlayer.isLooping = isLooping
             mediaPlayer.start();
         }
+
+        fun showLottieAnimation(view:LottieAnimationView,lottieAnimationFile: String){
+            view?.apply {
+                setAnimation(lottieAnimationFile)
+                repeatCount = 1
+                playAnimation()
+            }
+        }
+
 
 
 

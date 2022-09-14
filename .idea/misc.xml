@@ -9,7 +9,8 @@
         <entry key="..\:/Shaheen/Other Files/Q/app/src/main/res/drawable/ic_mediamodifier_design.xml" value="0.1845" />
         <entry key="..\:/Shaheen/Other Files/Q/app/src/main/res/drawable/ic_mediamodifier_design__2_.xml" value="0.1845" />
         <entry key="..\:/Shaheen/Other Files/Q/app/src/main/res/drawable/ic_mediamodifier_design__2__cropped.xml" value="0.1845" />
-        <entry key="..\:/Shaheen/Other Files/Q/app/src/main/res/layout/activity_main.xml" value="0.18170158187259514" />
+        <entry key="..\:/Shaheen/Other Files/Q/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Shaheen/Other Files/Q/app/src/main/res/layout/answer_aninmation.xml" value="0.21396192203082504" />
         <entry key="..\:/Shaheen/Other Files/Q/app/src/main/res/layout/fragment_answers.xml" value="0.1360217300459674" />
         <entry key="..\:/Shaheen/Other Files/Q/app/src/main/res/layout/fragment_question.xml" value="0.18170158187259514" />
       </map>
@@ -20,5 +21,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.33" />
+      </ProjectState>
+    </option>
   </component>
 </project>

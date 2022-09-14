@@ -5,12 +5,14 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.q.R
 import com.example.q.data.model.Question
@@ -59,16 +61,32 @@ class QuestionFragment : Fragment(), PermissionHelper.PermissionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getNextQuestion().observe(requireActivity()) {
+        /*viewModel.getNextQuestion().observe(requireActivity()) {
             question = it
             showQuestion()
-        }
+        }*/
 
+        getQuestion()
+
+    }
+
+    private fun getQuestion() {
+        viewModel.question.observe(requireActivity(), Observer {
+
+            question = it
+            showQuestion()
+
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mediaPlayer.stop()
     }
 
     private fun showQuestion() {
 
-        viewModel.currentQuestion(question) //for passing question details to AnswerFragment
+        //     viewModel.currentQuestion(question) //for passing question details to AnswerFragment
 
         binding.fragmentQuestionTextview.text = question.question
         questionPath =
@@ -85,9 +103,18 @@ class QuestionFragment : Fragment(), PermissionHelper.PermissionListener {
                 } else {
                     manageAudioTypeQuestion()
                 }
-
+            }
+            Consts.TYPE_VIDEO -> {
+                manageVideoTypeQuestion()
             }
         }
+    }
+
+    private fun manageVideoTypeQuestion() {
+        setVisibilityOfQuestionView(binding.FragmentQuestionVideoView)
+        binding.FragmentQuestionVideoView.setVideoURI(Uri.parse(questionPath))
+        binding.FragmentQuestionVideoView.start()
+        binding.FragmentQuestionVideoView.setOnPreparedListener { it.isLooping = true }
     }
 
     private fun manageAudioTypeQuestion() {
@@ -146,7 +173,7 @@ class QuestionFragment : Fragment(), PermissionHelper.PermissionListener {
         val dialogBuilder = AlertDialog.Builder(requireContext())
 
         // set message of alert dialog
-        dialogBuilder.setMessage("Read/Write Contacts permission is Required")
+        dialogBuilder.setMessage("permission is Required")
             // if the dialog is cancelable
             .setCancelable(false)
             // positive button text and action
@@ -156,10 +183,10 @@ class QuestionFragment : Fragment(), PermissionHelper.PermissionListener {
                     Manifest.permission.RECORD_AUDIO
                 )
             }
-            // negative button text and action
-            .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
-                dialog.cancel()
-            })
+        // negative button text and action
+        /* .setNegativeButton("Exit", DialogInterface.OnClickListener { dialog, id ->
+             dialog.cancel()
+         })*/
 
         // create dialog box
         val alert = dialogBuilder.create()

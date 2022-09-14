@@ -9,13 +9,13 @@ import com.example.q.data.model.Question
 interface QuestionsDao {
 
     @Insert
-    fun insert(user: Question)
+    fun insert(question: Question)
 
     @Update
-    fun update(user: Question)
+    fun update(question: Question)
 
     @Delete
-    fun delete(user: Question)
+    fun delete(question: Question)
 
     @Query("select * from questionsTable where level=:currentLevel and status="+ Consts.statusIncomplete +" limit 1")
     fun getNextQuestion(currentLevel:Int): LiveData<Question>

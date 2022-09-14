@@ -1,29 +1,20 @@
 package com.example.q.ui.main.view.fragment
 
-import android.Manifest
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.pm.PackageManager
-import android.media.MediaPlayer
+
+import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.q.R
 import com.example.q.data.model.Question
+import com.example.q.databinding.AnswerAninmationBinding
 import com.example.q.databinding.FragmentAnswersBinding
-import com.example.q.databinding.FragmentQuestionBinding
 import com.example.q.ui.main.viewmodel.QuestionsViewModel
-import com.example.q.utils.AppClass
 import com.example.q.utils.Consts
-import com.example.q.utils.PermissionHelper
 import com.example.q.utils.Utils
 
 
@@ -44,7 +35,7 @@ class AnswerFragment : Fragment(), View.OnClickListener {
         binding = FragmentAnswersBinding.inflate(layoutInflater)
 
         viewModel =
-            ViewModelProvider(requireActivity()).get(QuestionsViewModel::class.java)
+            ViewModelProvider(requireActivity())[QuestionsViewModel::class.java]
 
         binding.FragmentAnswersOptionA.setOnClickListener(this)
         binding.FragmentAnswersOptionB.setOnClickListener(this)
@@ -65,14 +56,31 @@ class AnswerFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.question!!.observe(requireActivity(), Observer {
+        /* viewModel.question.observe(requireActivity(), Observer {
 
+             question = it
+
+             showAnswerOptions()
+
+         })*/
+
+        //   getNextQuestion()
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getNextQuestion()
+
+    }
+
+    private fun getNextQuestion() {
+        viewModel.getNextQuestion().observe(requireActivity()) {
             question = it
-
+            viewModel.currentQuestion(question) //for passing question details to QuestionFragment
             showAnswerOptions()
-
-        })
-
+        }
     }
 
     private fun showAnswerOptions() {
@@ -84,35 +92,63 @@ class AnswerFragment : Fragment(), View.OnClickListener {
 
     }
 
-    override fun onClick(p0: View?) {
-        checkAnswer((p0 as Button).text.toString())
+    override fun onClick(view: View) {
+        checkAnswer((view as Button).text.toString())
     }
 
 
-      /*  when (p0) {
-            binding.FragmentAnswersOptionA -> {
-                checkAnswer(question.optionA)
-            }
-            binding.FragmentAnswersOptionB -> {
-                checkAnswer(question.optionB)
-            }
-            binding.FragmentAnswersOptionC -> {
-                checkAnswer(question.optionC)
-            }
-            binding.FragmentAnswersOptionB -> {
-                checkAnswer(question.optionD)
-            }
+    /*  when (p0) {
+          binding.FragmentAnswersOptionA -> {
+              checkAnswer(question.optionA)
+          }
+          binding.FragmentAnswersOptionB -> {
+              checkAnswer(question.optionB)
+          }
+          binding.FragmentAnswersOptionC -> {
+              checkAnswer(question.optionC)
+          }
+          binding.FragmentAnswersOptionB -> {
+              checkAnswer(question.optionD)
+          }
 
 
-        }*/
+      }*/
 
-    fun checkAnswer(selectedAnswer: String) {
+    private fun checkAnswer(selectedAnswer: String) {
         if (selectedAnswer == question.correctAnswer) {
-            Log.d("sdfsd", "correct")
+
+            showAnimationDialog(true)
+          //  getNextQuestion()
         } else {
-            Toast.makeText(AppClass.applicationContext(), "Wrong answer", Toast.LENGTH_LONG).show()
+
+            showAnimationDialog(false)
+
+
         }
     }
 
+    private fun showAnimationDialog(answerCorrect: Boolean) {
+        val dialogBinding = AnswerAninmationBinding.inflate(layoutInflater)
+        val view = dialogBinding.root
+        val dialog = Dialog(requireActivity(), R.style.dialog_theme)
+        dialog.setContentView(view)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+        if (answerCorrect) {
+            Utils.showLottieAnimation(dialogBinding.animationView, Consts.ANIM_CORRECT)
+        } else {
+            Utils.showLottieAnimation(dialogBinding.animationView, Consts.ANIM_WRONG)
+        }
+
+        dialog.setOnCancelListener {
+
+            if (answerCorrect) {
+                question.status = Consts.statusCompleted
+                viewModel.updateQuestion(question)
+                getNextQuestion()
+            }
+
+        }
+    }
 
 }

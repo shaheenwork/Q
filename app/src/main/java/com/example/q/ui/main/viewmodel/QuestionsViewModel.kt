@@ -77,7 +77,7 @@ class QuestionsViewModel : ViewModel() {
                 repository.insertQuestionToDb(
                     Question(
                         TYPE_VIDEO,
-                        "dark_cave",
+                        "dark_cave.mp4",
                         "Identify the show",
                         "West World",
                         "Bosch",

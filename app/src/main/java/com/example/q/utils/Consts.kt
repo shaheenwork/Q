@@ -13,6 +13,11 @@ public interface Consts {
         const val KEY_LEVEL:String = "level"
 
 
+        //animation filenames
+        const val ANIM_CORRECT:String = "anim2.json"
+        const val ANIM_WRONG:String = "anim.json"
+
+
 
         //type of questions
         const val TYPE_VIDEO:Int = 1
