@@ -15,7 +15,7 @@ public interface Consts {
 
         //animation filenames
         const val ANIM_CORRECT:String = "anim2.json"
-        const val ANIM_WRONG:String = "anim.json"
+        const val ANIM_WRONG:String = "anim3.json"
 
 
 

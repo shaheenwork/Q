@@ -107,6 +107,9 @@ class QuestionFragment : Fragment(), PermissionHelper.PermissionListener {
             Consts.TYPE_VIDEO -> {
                 manageVideoTypeQuestion()
             }
+            Consts.TYPE_AUDIO_DIALOGUE -> {
+                manageDialogTypeQuestion()
+            }
         }
     }
 
@@ -122,6 +125,11 @@ class QuestionFragment : Fragment(), PermissionHelper.PermissionListener {
         Utils.playAudio(mediaPlayer, questionPath, true)
         showBGMVisualisation()
     }
+    private fun manageDialogTypeQuestion() {
+        setVisibilityOfQuestionView(binding.FragmentQuestionDialogView)
+        Utils.playAudio(mediaPlayer, questionPath, true)
+        showDialogVisualisation()
+    }
 
     private fun setVisibilityOfQuestionView(view_to_be_shown: View) {
 
@@ -131,15 +139,33 @@ class QuestionFragment : Fragment(), PermissionHelper.PermissionListener {
         when (view_to_be_shown) {
             binding.FragmentQuestionImageview -> {
                 binding.FragmentQuestionVideoView.visibility = View.GONE
+                binding.FragmentQuestionDialogView.visibility = View.GONE
                 binding.FragmentQuestionAudioView.visibility = View.GONE
+
+                binding.FragmentQuestionVideoView.stopPlayback()
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.reset()
+                }
             }
             binding.FragmentQuestionAudioView -> {
                 binding.FragmentQuestionVideoView.visibility = View.GONE
+                binding.FragmentQuestionVideoView.stopPlayback()
                 binding.FragmentQuestionImageview.visibility = View.GONE
+                binding.FragmentQuestionDialogView.visibility = View.GONE
+            }
+            binding.FragmentQuestionDialogView -> {
+                binding.FragmentQuestionVideoView.visibility = View.GONE
+                binding.FragmentQuestionVideoView.stopPlayback()
+                binding.FragmentQuestionImageview.visibility = View.GONE
+                binding.FragmentQuestionAudioView.visibility = View.GONE
             }
             binding.FragmentQuestionVideoView -> {
                 binding.FragmentQuestionAudioView.visibility = View.GONE
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.reset()
+                }
                 binding.FragmentQuestionImageview.visibility = View.GONE
+                binding.FragmentQuestionDialogView.visibility = View.GONE
             }
         }
 
@@ -152,7 +178,18 @@ class QuestionFragment : Fragment(), PermissionHelper.PermissionListener {
                 R.color.black
             )
         );
-        binding.FragmentQuestionAudioView.setPlayer(mediaPlayer.getAudioSessionId());
+        binding.FragmentQuestionAudioView.setPlayer(mediaPlayer.audioSessionId);
+    }
+
+    private fun showDialogVisualisation() {
+
+        binding.FragmentQuestionDialogView.setColor(
+            ContextCompat.getColor(
+                AppClass.applicationContext(),
+                R.color.black
+            )
+        );
+        binding.FragmentQuestionDialogView.setPlayer(mediaPlayer.audioSessionId);
     }
 
     override fun shouldShowRationaleInfo() {

@@ -95,7 +95,7 @@ class QuestionsViewModel : ViewModel() {
                 repository.insertQuestionToDb(
                     Question(
                         TYPE_AUDIO_DIALOGUE,
-                        "ww_dlg",
+                        "danger.mp3",
                         "Complete the dialog",
                         "I am the danger",
                         "I am not in danger",

@@ -56,6 +56,17 @@
             app:layout_constraintTop_toBottomOf="@id/TopFrame"
             />
 
+        <com.chibde.visualizer.LineVisualizer
+            android:id="@+id/FragmentQuestionDialogView"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/BottomFrame"
+            app:layout_constraintTop_toBottomOf="@id/TopFrame" />
+
 
 
 

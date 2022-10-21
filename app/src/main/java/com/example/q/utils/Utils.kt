@@ -56,6 +56,11 @@ interface Utils {
             }
         }
 
+        fun stopPreviousQuestion(mediaPlayer: MediaPlayer,){
+            if (mediaPlayer!=null){
+                mediaPlayer.reset()
+            }
+        }
 
 
 
